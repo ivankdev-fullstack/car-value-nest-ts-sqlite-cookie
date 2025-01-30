@@ -1,8 +1,11 @@
 import { Body, Controller, Get, Param, Patch } from '@nestjs/common';
+import { Serialize } from 'src/interceptors/serialize.interceptor';
+import { UpdateUserDto, UserDto } from './entity/user.dto';
 import { User } from './entity/user.entity';
 import { UserService } from './user.service';
 
 @Controller('users')
+@Serialize(UserDto)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -19,7 +22,7 @@ export class UserController {
   @Patch('/:id')
   public async updateById(
     @Param('id') id: number,
-    @Body() body: Partial<User>,
+    @Body() body: UpdateUserDto,
   ): Promise<User> {
     return this.userService.updateById(id, body);
   }
