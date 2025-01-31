@@ -7,10 +7,10 @@ import { AuthService } from './auth.service';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  // @Post('signin')
-  // public async signup(@Body() body: CreateUserDto): Promise<User> {
-  //   return this.authService.signupUser(body);
-  // }
+  @Post('signin')
+  public async signinUser(@Body() body: CreateUserDto): Promise<User> {
+    return this.authService.signinUser(body);
+  }
 
   @Post('signup')
   public async signupUser(@Body() body: CreateUserDto): Promise<User> {

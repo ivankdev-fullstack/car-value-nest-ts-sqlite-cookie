@@ -1,5 +1,5 @@
 import { Expose } from 'class-transformer';
-import { IsEmail, IsOptional, IsString, Min } from 'class-validator';
+import { IsEmail, IsOptional, IsString, MinLength } from 'class-validator';
 
 export class UserDto {
   @Expose()
@@ -14,7 +14,7 @@ export class CreateUserDto {
   email: string;
 
   @IsString()
-  @Min(6)
+  @MinLength(6)
   password: string;
 }
 
