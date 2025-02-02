@@ -1,8 +1,10 @@
 import { Expose, Transform } from 'class-transformer';
 import {
+  IsBoolean,
   IsLatitude,
   IsLongitude,
   IsNumber,
+  IsOptional,
   IsString,
   Max,
   Min,
@@ -11,6 +13,9 @@ import {
 export class ReportDto {
   @Expose()
   id: number;
+
+  @Expose()
+  approved: boolean;
 
   @Expose()
   price: number;
@@ -33,7 +38,7 @@ export class ReportDto {
   @Expose()
   mileage: number;
 
-  @Transform(({ obj }) => obj.user.id)
+  @Transform(({ obj }) => obj.user?.id)
   @Expose()
   userId: number;
 }
@@ -65,4 +70,44 @@ export class CreateReportDto {
   @Min(0)
   @Max(1000000)
   mileage: number;
+}
+
+export class UpdateReportDto {
+  @IsOptional()
+  @IsBoolean()
+  approved?: boolean;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  @Max(1000000)
+  price?: number;
+
+  @IsOptional()
+  @IsString()
+  make?: string;
+
+  @IsOptional()
+  @IsString()
+  model?: string;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(1930)
+  @Max(2050)
+  year?: number;
+
+  @IsOptional()
+  @IsLongitude()
+  lng?: number;
+
+  @IsOptional()
+  @IsLatitude()
+  lat?: number;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  @Max(1000000)
+  mileage?: number;
 }
