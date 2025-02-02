@@ -1,14 +1,24 @@
-import { Body, Controller, Get, HttpCode, Post, Session } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  Post,
+  Session,
+  UseGuards,
+} from '@nestjs/common';
 import { CreateUserDto } from '../user/entity/user.dto';
 import { User } from '../user/entity/user.entity';
 import { AuthService } from './auth.service';
 import { CurrentUser } from './decorators/current-user.decorator';
+import { AuthGuard } from './guards/auth.guard';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Get('me')
+  @UseGuards(AuthGuard)
   public async me(@CurrentUser() user: User): Promise<User> {
     return user;
   }

@@ -7,11 +7,11 @@ import { User } from 'src/user/entity/user.entity';
 
 export const CurrentUser = createParamDecorator(
   (data: never, ctx: ExecutionContext): User | undefined => {
-    const req = ctx.switchToHttp().getRequest();
-    if (!req?.user) {
+    const user: User | undefined = ctx.switchToHttp().getRequest()?.user;
+    if (!user) {
       throw new UnauthorizedException('Not authorized.');
     }
 
-    return req.user;
+    return user;
   },
 );
