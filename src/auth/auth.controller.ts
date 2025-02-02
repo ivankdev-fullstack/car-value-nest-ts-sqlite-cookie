@@ -1,30 +1,16 @@
-import {
-  Body,
-  Controller,
-  Get,
-  HttpCode,
-  Post,
-  Session,
-  UnauthorizedException,
-} from '@nestjs/common';
-import { UserService } from 'src/user/user.service';
+import { Body, Controller, Get, HttpCode, Post, Session } from '@nestjs/common';
 import { CreateUserDto } from '../user/entity/user.dto';
 import { User } from '../user/entity/user.entity';
 import { AuthService } from './auth.service';
+import { CurrentUser } from './decorators/current-user.decorator';
 
 @Controller('auth')
 export class AuthController {
-  constructor(
-    private readonly authService: AuthService,
-    private readonly userService: UserService,
-  ) {}
+  constructor(private readonly authService: AuthService) {}
 
   @Get('me')
-  public async me(@Session() session: any): Promise<User> {
-    if (!session.userId) {
-      throw new UnauthorizedException('Not authorized.');
-    }
-    return this.userService.getById(session.userId);
+  public async me(@CurrentUser() user: User): Promise<User> {
+    return user;
   }
 
   @Post('signin')
