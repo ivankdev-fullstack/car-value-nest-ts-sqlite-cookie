@@ -4,12 +4,17 @@ import {
   Injectable,
   NestInterceptor,
 } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { Observable } from 'rxjs';
-import { UserService } from 'src/user/user.service';
+import { User } from 'src/user/entity/user.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class CurrentUserInterceptor implements NestInterceptor {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
+  ) {}
 
   async intercept(
     ctx: ExecutionContext,
@@ -19,7 +24,7 @@ export class CurrentUserInterceptor implements NestInterceptor {
     const userId = req.session?.userId;
 
     if (userId) {
-      req.user = await this.userService.getById(userId);
+      req.user = await this.userRepository.findOneBy({ id: userId });
     }
 
     return next.handle();
