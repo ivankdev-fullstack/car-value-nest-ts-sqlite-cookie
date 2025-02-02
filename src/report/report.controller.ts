@@ -7,7 +7,8 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
-import { AuthGuard } from 'src/auth/guards/auth.guard';
+import { AdminGuard } from 'src/guards/admin.guard';
+import { AuthGuard } from 'src/guards/auth.guard';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { User } from 'src/user/entity/user.entity';
 import { CreateReportDto, ReportDto } from './entity/report.dto';
@@ -29,8 +30,7 @@ export class ReportController {
   }
 
   @Patch('/approve/:id')
-  @UseGuards(AuthGuard)
-  @Serialize(ReportDto)
+  @UseGuards(AdminGuard)
   public async approve(@Param('id') id: number): Promise<Report> {
     return this.reportService.updateById(id, { approved: true });
   }
