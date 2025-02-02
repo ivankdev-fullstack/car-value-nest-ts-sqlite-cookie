@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  HttpCode,
   Param,
   Patch,
   Post,
@@ -11,13 +12,23 @@ import { AdminGuard } from 'src/guards/admin.guard';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { User } from 'src/user/entity/user.entity';
-import { CreateReportDto, ReportDto } from './entity/report.dto';
+import {
+  CreateReportDto,
+  GetEstimateDto,
+  ReportDto,
+} from './entity/report.dto';
 import { Report } from './entity/report.entity';
 import { ReportService } from './report.service';
 
 @Controller('reports')
 export class ReportController {
   constructor(private readonly reportService: ReportService) {}
+
+  @Post('estimate')
+  @HttpCode(200)
+  public async getEstimate(@Body() body: GetEstimateDto) {
+    return this.reportService.createEstimate(body);
+  }
 
   @Post()
   @UseGuards(AuthGuard)
