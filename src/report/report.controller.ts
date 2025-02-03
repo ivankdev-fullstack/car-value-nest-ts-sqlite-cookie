@@ -7,11 +7,11 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { CurrentUser } from 'src/decorators/current-user.decorator';
-import { AdminGuard } from 'src/guards/admin.guard';
-import { AuthGuard } from 'src/guards/auth.guard';
-import { Serialize } from 'src/interceptors/serialize.interceptor';
-import { User } from 'src/user/entity/user.entity';
+import { CurrentUser } from '../decorators/current-user.decorator';
+import { AdminGuard } from '../guards/admin.guard';
+import { AuthGuard } from '../guards/auth.guard';
+import { Serialize } from '../interceptors/serialize.interceptor';
+import { User } from '../user/entity/user.entity';
 import {
   CreateReportDto,
   GetEstimateDto,

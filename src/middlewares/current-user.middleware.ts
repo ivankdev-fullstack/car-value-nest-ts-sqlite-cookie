@@ -1,8 +1,8 @@
 import { NestMiddleware } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { NextFunction, Response } from 'express';
-import { User } from 'src/user/entity/user.entity';
 import { Repository } from 'typeorm';
+import { User } from '../user/entity/user.entity';
 
 export class CurrentUserMiddleware implements NestMiddleware {
   constructor(

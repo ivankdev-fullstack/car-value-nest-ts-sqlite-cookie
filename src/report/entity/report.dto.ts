@@ -70,6 +70,10 @@ export class CreateReportDto {
   @Min(0)
   @Max(1000000)
   mileage: number;
+
+  @IsOptional()
+  @IsBoolean()
+  approved?: boolean;
 }
 
 export class UpdateReportDto {
